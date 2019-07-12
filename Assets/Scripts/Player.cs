@@ -22,11 +22,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // ===========================
         // Update player acceleration
+        // ===========================
         Vector2 force = (Vector2)transform.up * Input.GetAxis("Vertical") * acceleration;
         rb.AddForce(force);
 
+        // ===========================
         // Update player's rotation                
+        // ===========================
 
         // GetAxisRaw will return -1 or 1
         float horizontalAxis = Input.GetAxisRaw("Horizontal");
@@ -60,7 +64,8 @@ public class Player : MonoBehaviour
             targetRotation = z - (z % rotationDegreesInterval) + rotationDegreesInterval;
         }
 
-        // Rotate our transform a step closer to the target rotation                        
+        // Rotate our transform a step closer to the target rotation    
+        // TODO: transform.Rotate(xAngle: 0f, yAngle: 0f, zAngle: amount);
         transform.rotation = Quaternion.RotateTowards(from: transform.rotation, to: Quaternion.Euler(0f, 0f, targetRotation), maxDegreesDelta: angularAcceleration * Time.deltaTime);
         // Debug.Log("Target rotation: " + targetRotation);
         // Debug.Log("Current rotation: " + z);
