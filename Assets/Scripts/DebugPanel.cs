@@ -15,7 +15,8 @@ public class DebugPanel : MonoBehaviour
     {
         axisText.text = "V: " + Format(Input.GetAxis("Vertical")) + " H: " + Format(Input.GetAxisRaw("Horizontal"));
         rotationText.text = "Rotation z: " + (player.transform.rotation.eulerAngles.z);
-        targetRotationText.text = "Target: " + Format(player.GetTargetRotation());
+        // targetRotationText.text = "Acceleration: " + Format(player.GetTargetRotation());
+        targetRotationText.text = "Acceleration: " + Format(player.acceleration);
     }
 
     // Custom String Format

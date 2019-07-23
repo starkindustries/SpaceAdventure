@@ -6,35 +6,154 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float acceleration;
-    public float angularAcceleration;
-    public int rotationDegreesInterval;
+    // public float angularAcceleration;
+    // public int rotationDegreesInterval;
+    // public Transform forcePosition;    
 
-    private Rigidbody2D rb;
+    public TestJoint leftEngine;
+    public TestJoint rightEngine;
+
+    public GameObject frontLeftEngineSprite;
+    public GameObject frontRightEngineSprite;
+    public GameObject rearLeftEngineSprite;
+    public GameObject rearRightEngineSprite;    
+
+    // private Rigidbody2D rb;
     private float targetRotation;
+    // private float direction;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("Systems online!");
-        rb = GetComponent<Rigidbody2D>();
+        Debug.Log("Systems online!");        
+        // rb.AddForceAtPosition(force: transform.up * acceleration, position: forcePosition.position);
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
+        // *******************
+        // rear left engine
+        // *******************
+        if (Input.GetKey(KeyCode.A)) {
+            Debug.Log("A");
+            leftEngine.Accelerate(acceleration);            
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            rearLeftEngineSprite.SetActive(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            rearLeftEngineSprite.SetActive(false);
+        }
+
+        // *******************
+        // rear right engine
+        // *******************
+        if (Input.GetKey(KeyCode.D))
+        {
+            Debug.Log("D");
+            rightEngine.Accelerate(acceleration);
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            rearRightEngineSprite.SetActive(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            rearRightEngineSprite.SetActive(false);
+        }
+
+        // *******************
+        // front left engine
+        // *******************
+        if (Input.GetKey(KeyCode.Q))
+        {
+            Debug.Log("Q");
+            leftEngine.Accelerate(-1 * acceleration);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            frontLeftEngineSprite.SetActive(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            frontLeftEngineSprite.SetActive(false);
+        }
+
+        // *******************
+        // front right engine
+        // *******************
+        if (Input.GetKey(KeyCode.E))
+        {
+            Debug.Log("E");
+            rightEngine.Accelerate(-1 * acceleration);
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            frontRightEngineSprite.SetActive(true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            frontRightEngineSprite.SetActive(false);
+        }
+    }
+
+    /*
+    private void Update()
+    {
+        int horizontal = (int)Input.GetAxisRaw("Horizontal");
+        if (horizontal > 0)
+        {
+            direction = -1;
+        }
+        else if (horizontal < 0)
+        {
+            direction = 1;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            direction = 0;
+        }
+    }
+
+    private void FixedUpdate()
+    {        
+        transform.Rotate(xAngle: 0f, yAngle: 0f, zAngle: angularAcceleration * direction);
+        rb.velocity = transform.up * acceleration;
+    }
+    */
+    /*
+    // Update is called once per frame    
+    void FixedUpdate()
+    {        
+        // ===========================
+        // Update player's rotation                
+        // ===========================
+        // GetAxisRaw will return either -1 or 1. GetAxis will return a float from -1 to 1.
+       
+
+        float horizontalAxis = Input.GetAxis("Horizontal");
+        transform.Rotate(xAngle: 0f, yAngle: 0f, zAngle: -horizontalAxis * angularAcceleration);
+
         // ===========================
         // Update player acceleration
         // ===========================
         Vector2 force = (Vector2)transform.up * Input.GetAxis("Vertical") * acceleration;
-        rb.AddForce(force);
+        // Vector2 force = (Vector2)transform.up * acceleration * Time.deltaTime;
+        // rb.AddForce(force);
+        rb.velocity = force;
 
-        // ===========================
-        // Update player's rotation                
-        // ===========================
-
-        // GetAxisRaw will return -1 or 1
-        float horizontalAxis = Input.GetAxisRaw("Horizontal");
-
+        /*
         // Get current player's rotation. We only care about the z-axis since this is a 2D game
         int z = Mathf.RoundToInt(transform.rotation.eulerAngles.z);
         
@@ -64,14 +183,14 @@ public class Player : MonoBehaviour
             targetRotation = z - (z % rotationDegreesInterval) + rotationDegreesInterval;
         }
 
-        // Rotate our transform a step closer to the target rotation    
-        // TODO: transform.Rotate(xAngle: 0f, yAngle: 0f, zAngle: amount);
+        // Rotate our transform a step closer to the target rotation        
         transform.rotation = Quaternion.RotateTowards(from: transform.rotation, to: Quaternion.Euler(0f, 0f, targetRotation), maxDegreesDelta: angularAcceleration * Time.deltaTime);
         // Debug.Log("Target rotation: " + targetRotation);
         // Debug.Log("Current rotation: " + z);
-        // Debug.Log("z%: " + (z % rotationDegreesInterval));
-    }
-
+        // Debug.Log("z%: " + (z % rotationDegreesInterval));     
+        */
+    //}
+    
     public float GetTargetRotation()
     {
         return targetRotation;
